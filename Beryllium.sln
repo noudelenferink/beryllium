@@ -1,17 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2010
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29102.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Beryllium.Core", "Beryllium.Core\Beryllium.Core.csproj", "{249B5623-72B7-4C9A-B7C2-DC5EB636FE98}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Beryllium.Mobile.Core", "Beryllium.Mobile.Core\Beryllium.Mobile.Core.csproj", "{249B5623-72B7-4C9A-B7C2-DC5EB636FE98}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Beryllium.UI", "Beryllium.UI\Beryllium.UI.csproj", "{F3C8E7B6-2E6C-457E-82A2-70823CF37968}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Beryllium.Mobile.UI", "Beryllium.Mobile.UI\Beryllium.Mobile.UI.csproj", "{F3C8E7B6-2E6C-457E-82A2-70823CF37968}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Beryllium.Droid", "Beryllium.Droid\Beryllium.Droid.csproj", "{EF5C77D0-6483-4FC9-8B7E-FE58FAE8200A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Beryllium.Mobile.Droid", "Beryllium.Mobile.Droid\Beryllium.Mobile.Droid.csproj", "{EF5C77D0-6483-4FC9-8B7E-FE58FAE8200A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Beryllium.iOS", "Beryllium.iOS\Beryllium.iOS.csproj", "{BF543944-F0E1-44F8-911A-46B3E7CCA3D9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Beryllium.Mobile.iOS", "Beryllium.Mobile.iOS\Beryllium.Mobile.iOS.csproj", "{BF543944-F0E1-44F8-911A-46B3E7CCA3D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Beryllium.UWP", "Beryllium.UWP\Beryllium.UWP.csproj", "{78149429-AB5A-4C6B-930C-D2E6D66D9E09}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Beryllium.Mobile.UWP", "Beryllium.Mobile.UWP\Beryllium.Mobile.UWP.csproj", "{78149429-AB5A-4C6B-930C-D2E6D66D9E09}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "!Solution Items", "!Solution Items", "{F9C93929-3DE2-4CFF-81DE-D71514B958FD}"
 	ProjectSection(SolutionItems) = preProject
