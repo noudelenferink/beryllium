@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Android.App;
 using Android.OS;
 using MvvmCross.Forms.Platforms.Android.Views;
+using Xamarin.Forms;
 
 namespace Beryllium.Mobile.Droid.Views
 {
@@ -14,7 +15,13 @@ namespace Beryllium.Mobile.Droid.Views
        RoundIcon = "@mipmap/ic_launcher_round")]
     public class SplashActivity : MvxFormsSplashScreenAppCompatActivity<Setup, Core.App, UI.App>
     {
-        protected override Task RunAppStartAsync(Bundle bundle)
+      protected override void OnCreate(Bundle bundle)
+      {
+         Forms.SetFlags("CollectionView_Experimental");
+         Xamarin.Forms.Forms.Init(this, bundle);
+         base.OnCreate(bundle);
+      }
+      protected override Task RunAppStartAsync(Bundle bundle)
         {
             StartActivity(typeof(MainActivity));
             return Task.CompletedTask;

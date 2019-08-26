@@ -1,73 +1,72 @@
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
-using System.Threading.Tasks;
-using MvvmCross.Commands;
-using MvvmCross.Navigation;
-using MvvmCross.ViewModels;
-using Beryllium.Mobile.Core.ViewModels.Contacts;
-using Beryllium.Mobile.Core.ViewModels.Home;
-using Xamarin.Forms;
-
 namespace Beryllium.Mobile.Core.ViewModels.Menu
 {
-    public class MenuViewModel : BaseViewModel
-    {
-        readonly IMvxNavigationService _navigationService;
+   using System.Collections.ObjectModel;
+   using System.Threading.Tasks;
+   using MvvmCross.Commands;
+   using MvvmCross.Navigation;
+   using MvvmCross.ViewModels;
+   using Beryllium.Mobile.Core.ViewModels.Home;
+   using Xamarin.Forms;
+   using Beryllium.Mobile.Core.ViewModels.Trainings;
+   using MvvmHelpers;
+   using System.ComponentModel;
+   using System;
 
-        public IMvxAsyncCommand ShowDetailPageAsyncCommand { get; private set; }
+   public class MenuViewModel : RankixBaseViewModel
+   {
+      readonly IMvxNavigationService _navigationService;
 
-        public MenuViewModel(IMvxNavigationService navigationService)
-        {
-            _navigationService = navigationService;
-            MenuItemList = new MvxObservableCollection<string>()
+      public IMvxAsyncCommand ShowDetailPageAsyncCommand { get; private set; }
+
+      public MenuViewModel(IMvxNavigationService navigationService)
+      {
+         _navigationService = navigationService;
+         MenuItemList = new MvxObservableCollection<MenuItem>()
             {
-                "Home",
-                "Contacts"
+            new MenuItem{ Key = "Home", Title = "Home" , SortOrder = 1, TargetViewModel = typeof(HomeViewModel)},
+            new MenuItem{ Key = "TrainingSeasonOverview", Title = "Training seizoensoverzicht" , SortOrder = 2, TargetViewModel = typeof(TrainingSeasonOverviewViewModel)},
+            new MenuItem{ Key = "TrainingManager", Title = "Trainingbeheer" , SortOrder = 3, TargetViewModel = typeof(TrainingsListViewModel)}
             };
 
-            ShowDetailPageAsyncCommand = new MvxAsyncCommand(ShowDetailPageAsync);
-        }
+         ShowDetailPageAsyncCommand = new MvxAsyncCommand(ShowDetailPageAsync);
+      }
 
-        private ObservableCollection<string> _menuItemList;
-        public ObservableCollection<string> MenuItemList
-        {
-            get => _menuItemList;
-            set => SetProperty(ref _menuItemList, value);
-        }
+      private ObservableCollection<MenuItem> _menuItemList;
+      public ObservableCollection<MenuItem> MenuItemList
+      {
+         get => _menuItemList;
+         set => SetProperty(ref _menuItemList, value);
+      }
 
-        private async Task ShowDetailPageAsync()
-        {
-            // Implement your logic here.
-            switch (SelectedMenuItem)
-            {
-                case "Home":
-                    await _navigationService.Navigate<HomeViewModel>();
-                    break;
-                case "Contacts":
-                    await _navigationService.Navigate<ContactsViewModel>();
-                    break;
-                default:
-                    break;
-            }
+      private async Task ShowDetailPageAsync()
+      {
+         // Implement your logic here.
+         await _navigationService.Navigate(SelectedMenuItem.TargetViewModel);
 
-            if (Application.Current.MainPage is MasterDetailPage masterDetailPage)
-            {
-                masterDetailPage.IsPresented = false;
-            }
-            else if (Application.Current.MainPage is NavigationPage navigationPage
-                     && navigationPage.CurrentPage is MasterDetailPage nestedMasterDetail)
-            {
-                nestedMasterDetail.IsPresented = false;
-            }
-        }
+         if (Application.Current.MainPage is MasterDetailPage masterDetailPage)
+         {
+            masterDetailPage.IsPresented = false;
+         }
+         else if (Application.Current.MainPage is NavigationPage navigationPage
+                  && navigationPage.CurrentPage is MasterDetailPage nestedMasterDetail)
+         {
+            nestedMasterDetail.IsPresented = false;
+         }
+      }
 
-        private string _selectedMenuItem;
-        public string SelectedMenuItem
-        {
-            get => _selectedMenuItem;
-            set => SetProperty(ref _selectedMenuItem, value);
-        }
-    }
+      private MenuItem _selectedMenuItem;
+      public MenuItem SelectedMenuItem
+      {
+         get => _selectedMenuItem;
+         set => SetProperty(ref _selectedMenuItem, value);
+      }
+   }
+
+   public class MenuItem
+   {
+      public string Key { get; set; }
+      public string Title { get; set; }
+      public int SortOrder { get; set; }
+      public Type TargetViewModel { get; set; }
+   }
 }

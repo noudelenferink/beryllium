@@ -6,7 +6,7 @@ using MvvmCross.ViewModels;
 
 namespace Beryllium.Mobile.Core.ViewModels
 {
-    public abstract class BaseViewModelResult<TResult> : BaseViewModel, IMvxViewModelResult<TResult>
+    public abstract class RankixBaseViewModelResult<TResult> : RankixBaseViewModel, IMvxViewModelResult<TResult>
     {
         public TaskCompletionSource<object> CloseCompletionSource { get; set; }
 

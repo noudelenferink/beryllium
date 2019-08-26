@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<views:MvxContentPage x:TypeArguments="viewModels:TrainingAddPlayerViewModel"
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:views="clr-namespace:MvvmCross.Forms.Views;assembly=MvvmCross.Forms"
+    xmlns:mvx="clr-namespace:MvvmCross.Forms.Bindings;assembly=MvvmCross.Forms"
+    xmlns:auto="clr-namespace:Syncfusion.SfAutoComplete.XForms;assembly=Syncfusion.SfAutoComplete.XForms"
+    xmlns:viewModels="clr-namespace:Beryllium.Mobile.Core.ViewModels.Trainings;assembly=Beryllium.Mobile.Core"
+    xmlns:ListCollection="clr-namespace:System.Collections.Generic;assembly=netstandard"
+    x:Class="Beryllium.Mobile.UI.Pages.TrainingAddPlayerPage" Title="Training aanmaken">
+   <ContentPage.Content>
+      <StackLayout Margin="10">
+         
+         <auto:SfAutoComplete x:Name="AutoComplete" 
+                                     DataSource="{Binding AutoCompleteItems,Mode=TwoWay}"
+                                     SelectionChanged="AutoComplete_OnSelectionChanged"
+                                     DisplayMemberPath="FullName" 
+                                     SelectedValuePath="PlayerId"
+                                     NoResultsFoundText="Geen resultaten"
+                                     ValueChanged="AutoComplete_OnValueChanged" />
+         <Button Text="Toevoegen" mvx:Bi.nd="Command CreateCommand"/>
+      </StackLayout>
+   </ContentPage.Content>
+</views:MvxContentPage>

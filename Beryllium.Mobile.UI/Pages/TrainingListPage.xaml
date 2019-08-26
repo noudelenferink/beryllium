@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:MvxContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                      x:Class="Beryllium.Mobile.UI.Pages.TrainingListPage"
+                      xmlns:views="clr-namespace:MvvmCross.Forms.Views;assembly=MvvmCross.Forms"
+                      xmlns:viewModels="clr-namespace:Beryllium.Mobile.Core.ViewModels.Trainings;assembly=Beryllium.Mobile.Core"
+                      xmlns:behaviors="clr-namespace:Beryllium.Mobile.Core.Behaviors;assembly=Beryllium.Mobile.Core"
+                      x:Name="TrainingsContent"
+                      xmlns:utils="clr-namespace:Beryllium.Mobile.Core.Utils;assembly=Beryllium.Mobile.Core"
+                      xmlns:controls="clr-namespace:Beryllium.Mobile.UI.Controls;assembly=Beryllium.Mobile.UI"
+                      xmlns:core="clr-namespace:Beryllium.Mobile.Core;assembly=Beryllium.Mobile.Core"
+                      x:TypeArguments="viewModels:TrainingsListViewModel">
+   <ContentPage.ToolbarItems>
+      <ToolbarItem Command="{Binding CreateTrainingCommand}">
+         <ToolbarItem.IconImageSource>
+            <FontImageSource FontFamily="{DynamicResource FontAwesomeRegular}" Size="24" Glyph="{x:Static utils:FontAwesomeIcons.PlusSquare}">
+            </FontImageSource>
+         </ToolbarItem.IconImageSource>
+      </ToolbarItem>
+   </ContentPage.ToolbarItems>
+   <ContentPage.Content>
+      <ListView x:Name="TrainingsListView" ItemsSource="{Binding Trainings}" Margin="0"
+                   SelectedItem="{Binding SelectedTraining, Mode=TwoWay}"
+                   RefreshCommand="{Binding LoadAsyncCommand}"
+                   CachingStrategy="RecycleElement">
+         <ListView.Behaviors>
+            <behaviors:EventToCommandBehavior EventName="ItemSelected" Command="{Binding BindingContext.DataContext.ShowTrainingDetailPageAsyncCommand, 
+                            Source={x:Reference TrainingsContent}}">
+            </behaviors:EventToCommandBehavior>
+         </ListView.Behaviors>
+         <ListView.ItemTemplate>
+            <DataTemplate>
+               <ViewCell>
+                  <ViewCell.ContextActions>
+                     <MenuItem CommandParameter="{Binding Id}" Command="{Binding BindingContext.DataContext.DeleteTrainingCommand, Source={x:Reference TrainingsContent}}"  Text="Delete" IsDestructive="True" />
+                  </ViewCell.ContextActions>
+                  <Grid VerticalOptions="Center" Margin="10">
+                     <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                     </Grid.RowDefinitions>
+                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                     </Grid.ColumnDefinitions>
+                     <Label  Grid.Column="0" Text="{Binding Date, StringFormat='\{0:dd-MM-yyyy}'}" VerticalTextAlignment="Center" />
+
+                     <controls:CurvedCornersLabel
+                        Grid.Column="1"
+	                     Text="extra"
+	                     HorizontalTextAlignment="Center"
+                        VerticalTextAlignment="Center"
+	                     
+	                     HeightRequest="30"
+                        WidthRequest="40"
+	                     CurvedBackgroundColor="#0040ff"
+	                     TextColor="White"
+                        IsVisible="{Binding IsBonus}"
+	                     CurvedCornerRadius="15">
+                     </controls:CurvedCornersLabel>
+                     <Label Grid.Column="2" HorizontalTextAlignment="End" VerticalTextAlignment="Center" FontAttributes="Bold" Text="{Binding NumAttendees}" />
+                  </Grid>
+               </ViewCell>
+            </DataTemplate>
+         </ListView.ItemTemplate>
+      </ListView>
+   </ContentPage.Content>
+   <ContentPage.Behaviors>
+      <behaviors:EventHandlerBehavior EventName="Appearing">
+         <behaviors:ActionCollection>
+            <behaviors:InvokeCommandAction Command="{Binding LoadAsyncCommand}" />
+         </behaviors:ActionCollection>
+      </behaviors:EventHandlerBehavior>
+   </ContentPage.Behaviors>
+</views:MvxContentPage>

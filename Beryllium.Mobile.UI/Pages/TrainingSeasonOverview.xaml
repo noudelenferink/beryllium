@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:MvxContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                      x:Class="Beryllium.Mobile.UI.Pages.TrainingSeasonOverview"
+                      xmlns:views="clr-namespace:MvvmCross.Forms.Views;assembly=MvvmCross.Forms"
+                      xmlns:viewModels="clr-namespace:Beryllium.Mobile.Core.ViewModels.Trainings;assembly=Beryllium.Mobile.Core"
+                      xmlns:behaviors="clr-namespace:Beryllium.Mobile.Core.Behaviors;assembly=Beryllium.Mobile.Core"
+                      x:Name="TrainingsContent"
+                      xmlns:controls="clr-namespace:Beryllium.Mobile.UI.Controls;assembly=Beryllium.Mobile.UI"
+                      xmlns:core="clr-namespace:Beryllium.Mobile.Core;assembly=Beryllium.Mobile.Core"
+                      xmlns:local="clr-namespace:Beryllium.Mobile.UI.Pages;assembly=Beryllium.Mobile.UI"
+                      x:TypeArguments="viewModels:TrainingSeasonOverviewViewModel">
+   <ContentPage.Resources>
+      <local:PositiveColorConverter x:Key="PositiveColorConverter" />
+      <local:WidthCalculationConverter x:Key="WidthCalculationConverter" />
+   </ContentPage.Resources>
+   <ContentPage.Content>
+      <ListView x:Name="TrainingSeasonOverviewView" ItemsSource="{Binding SeasonOverview}" Margin="0"
+                SelectionMode="None"
+                RefreshCommand="{Binding LoadAsyncCommand}"
+                CachingStrategy="RecycleElement">
+         <ListView.ItemTemplate>
+            <DataTemplate>
+               <ViewCell>
+                  <Grid VerticalOptions="Center" Margin="10">
+                     <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                     </Grid.RowDefinitions>
+                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="{Binding Recent.Count, Converter={StaticResource WidthCalculationConverter}, ConverterParameter=15}" />
+                        <ColumnDefinition Width="50" />
+                     </Grid.ColumnDefinitions>
+                     <Label Grid.Column="0" Text="{Binding Player.FullName}" VerticalTextAlignment="Center" />
+                     <FlexLayout Grid.Column="1" Padding="0,5">
+                        <Frame Padding="1" HasShadow="False" BorderColor="Gray">
+                           <CollectionView ItemsSource="{Binding Recent}">
+                              <CollectionView.ItemsLayout>
+                                 <ListItemsLayout>
+                                    <x:Arguments>
+                                       <ItemsLayoutOrientation>Horizontal</ItemsLayoutOrientation>
+                                    </x:Arguments>
+                                 </ListItemsLayout>
+                              </CollectionView.ItemsLayout>
+                              <CollectionView.ItemTemplate>
+                                 <DataTemplate>
+                                       <Frame Padding="0" HasShadow="False" BorderColor="Black">
+                                          <BoxView WidthRequest="15" HeightRequest="10" BackgroundColor="{Binding Value, Converter={StaticResource PositiveColorConverter}}"/>
+                                       </Frame>
+                                 </DataTemplate>
+                              </CollectionView.ItemTemplate>
+                           </CollectionView>
+                        </Frame>
+                     </FlexLayout>
+                     <Label Grid.Column="2" Text="{Binding AttendancePercentage, StringFormat='{0:0}%'}" FontAttributes="Bold" VerticalTextAlignment="Center" HorizontalTextAlignment="End"/>
+
+                  </Grid>
+               </ViewCell>
+            </DataTemplate>
+         </ListView.ItemTemplate>
+      </ListView>
+   </ContentPage.Content>
+   <ContentPage.Behaviors>
+      <behaviors:EventHandlerBehavior EventName="Appearing">
+         <behaviors:ActionCollection>
+            <behaviors:InvokeCommandAction Command="{Binding LoadAsyncCommand}" />
+         </behaviors:ActionCollection>
+      </behaviors:EventHandlerBehavior>
+   </ContentPage.Behaviors>
+</views:MvxContentPage>

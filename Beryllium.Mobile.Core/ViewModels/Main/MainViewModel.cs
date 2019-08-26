@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Beryllium.Mobile.Core.ViewModels.Main
 {
-    public class MainViewModel : BaseViewModel
+    public class MainViewModel : RankixBaseViewModel
     {
     }
 }
