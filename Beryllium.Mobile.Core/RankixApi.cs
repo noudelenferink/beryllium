@@ -3,6 +3,7 @@ namespace Beryllium.Mobile.Core
    using Acr.UserDialogs;
    using Beryllium.Shared;
    using Beryllium.Shared.Players;
+   using Beryllium.Shared.Session;
    using Beryllium.Shared.Trainings;
    using RestSharp;
    using System;
@@ -47,6 +48,14 @@ namespace Beryllium.Mobile.Core
          }
 
          return response.Data;
+      }
+
+      public async Task<CurrentUserInformation> GetCurrentUserInformation()
+      {
+         var request = new RestRequest("/api/session/GetCurrentUserInformation", Method.POST, DataFormat.Json);
+         var result = await this.ExecuteAsync<CurrentUserInformation>(request);
+         return result;
+
       }
 
       public async Task<Result<List<TrainingListDto>>> GetTrainings(int seasonId, int teamId)

@@ -4,18 +4,33 @@ using System.Text;
 using System.Threading.Tasks;
 using Abp.ObjectMapping;
 using Acr.UserDialogs;
+using Beryllium.Shared.Session;
 using MvvmCross.Navigation;
 using MvvmCross.ViewModels;
+using Xamarin.Forms;
 
 namespace Beryllium.Mobile.Core.ViewModels
 {
-    public abstract class RankixBaseViewModel : MvxViewModel
-    {
+   public abstract class RankixBaseViewModel : MvxViewModel
+   {
       private bool _isBusy;
 
       public IObjectMapper ObjectMapper { get; set; }
 
       public IMvxNavigationService NavigationService { get; set; }
+
+      public CurrentUserInformation CurrentUserInformation
+      {
+         get
+         {
+            if(Application.Current.Properties.TryGetValue("userInfo", out var userInfoProp))
+            {
+               return (CurrentUserInformation)userInfoProp;
+            }
+
+            return null;
+         }
+      }
 
       public bool IsNotBusy => !IsBusy;
 
@@ -66,7 +81,7 @@ namespace Beryllium.Mobile.Core.ViewModels
          {
             await func();
          }
-         catch(Exception ex)
+         catch (Exception ex)
          {
             UserDialogs.Instance.Alert("Er is iets misgegaan");
          }

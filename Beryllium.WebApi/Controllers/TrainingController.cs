@@ -14,7 +14,7 @@
    using Microsoft.Extensions.Logging;
 
    [Route("api/trainings")]
-   public class TrainingController : BaseApiController<TrainingController>
+   public class TrainingController : BaseApiController
    {
       private readonly IRepository<Training> trainingRepository;
       private readonly RankixContext context;

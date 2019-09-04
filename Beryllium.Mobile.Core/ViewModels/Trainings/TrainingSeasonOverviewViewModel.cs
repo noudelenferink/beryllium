@@ -36,7 +36,7 @@
       {
          await SetBusyAsync(async () =>
          {
-            var result = await this.trainingService.GetTrainingSeasonOverview(6, 27);
+            var result = await this.trainingService.GetTrainingSeasonOverview(this.CurrentUserInformation.DefaultSeason.Id, this.CurrentUserInformation.DefaultTeam.Id);
             SeasonOverview.ReplaceRange(result);
          });
       }

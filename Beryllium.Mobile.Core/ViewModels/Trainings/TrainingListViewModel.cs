@@ -38,7 +38,7 @@
       {
          await SetBusyAsync(async () =>
          {
-            var result = await this.trainingService.GetTrainingsAsync(6, 27);
+            var result = await this.trainingService.GetTrainingsAsync(this.CurrentUserInformation.DefaultSeason.Id, this.CurrentUserInformation.DefaultTeam.Id);
             Trainings.ReplaceRange(result.OrderByDescending(t => t.Date));
          });
       }

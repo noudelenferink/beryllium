@@ -15,7 +15,7 @@
    using Microsoft.Extensions.Logging;
 
    [Route("api/players")]
-   public class PlayerController : BaseApiController<PlayerController>
+   public class PlayerController : BaseApiController
    {
       private readonly IRepository<TeamPlayer> teamPlayerRepository;
       private readonly IRepository<Player> playerRepository;

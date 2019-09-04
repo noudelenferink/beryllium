@@ -6,18 +6,24 @@
    using System;
    using Beryllium.Shared.Players;
    using System.Linq;
+   using Beryllium.Shared.Session;
+   using Xamarin.Forms;
 
    public class TrainingService : ITrainingService
    {
       public RankixApi RankixApi { get; set; }
-      public int CurrentSeasonId { get; set; }
+      public CurrentUserInformation CurrentUserInformation { get; set; }
       public int CurrentTeamId { get; set; }
 
       public TrainingService()
       {
          this.RankixApi = new RankixApi();
-         this.CurrentSeasonId = 6;
-         this.CurrentTeamId = 27;
+         if(!Application.Current.Properties.TryGetValue("userInfo", out var userInfoProp))
+         {
+            // Error
+         }
+
+         this.CurrentUserInformation = (CurrentUserInformation)userInfoProp;
       }
 
       public async Task<List<TrainingListDto>> GetTrainingsAsync(int seasonId, int teamId)
@@ -84,7 +90,7 @@
 
       public async Task CreateTraining(DateTime trainingDate, bool isBonus)
       {
-         await this.RankixApi.CreateTraining(this.CurrentSeasonId, this.CurrentTeamId, trainingDate, isBonus);
+         await this.RankixApi.CreateTraining(this.CurrentUserInformation.DefaultSeason.Id, this.CurrentUserInformation.DefaultTeam.Id, trainingDate, isBonus);
       }
 
       public async Task<bool> DeleteTraining(int trainingId)

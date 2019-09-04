@@ -32,7 +32,7 @@
             <DataTemplate>
                <ViewCell>
                   <ViewCell.ContextActions>
-                     <MenuItem CommandParameter="{Binding Id}" Command="{Binding BindingContext.DataContext.DeleteTrainingCommand, Source={x:Reference TrainingsContent}}"  Text="Delete" IsDestructive="True" />
+                     <MenuItem CommandParameter="{Binding Id}" Command="{Binding BindingContext.DataContext.DeleteTrainingCommand, Source={x:Reference TrainingsContent}}"  Text="Verwijderen" IsDestructive="True" />
                   </ViewCell.ContextActions>
                   <Grid VerticalOptions="Center" Margin="10">
                      <Grid.RowDefinitions>

@@ -7,6 +7,7 @@ using Beryllium.Mobile.Core.ViewModels.Menu;
 using Beryllium.Mobile.Core.ViewModels.Trainings;
 using System.Threading.Tasks;
 using MvvmCross.ViewModels;
+using Xamarin.Forms;
 
 namespace Beryllium.Mobile.Core.ViewModels.Root
 {
@@ -24,7 +25,14 @@ namespace Beryllium.Mobile.Core.ViewModels.Root
       public override void ViewAppearing()
       {
          base.ViewAppearing();
-         MvxNotifyTask.Create(async () => await this.InitializeViewModels());
+         MvxNotifyTask.Create(async () => await this.InitializeApplication());
+      }
+
+      private async Task InitializeApplication()
+      {
+         await this.LoadSession();
+
+         await this.InitializeViewModels();
       }
 
       public async Task InitializeViewModels()
@@ -36,6 +44,13 @@ namespace Beryllium.Mobile.Core.ViewModels.Root
 
             this.AppLoaded = true;
          }
+      }
+
+      private async Task LoadSession()
+      {
+         var api = new RankixApi();
+         var userInfo = await api.GetCurrentUserInformation();
+         Application.Current.Properties.Add("userInfo", userInfo);
       }
    }
 }
